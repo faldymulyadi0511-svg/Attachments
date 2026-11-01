@@ -1,0 +1,19 @@
+{
+    "name": "Student Task Manager",
+    "short_name": "TaskMate",
+    "description": "Aplikasi pengelola tugas mahasiswa",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#F6F7FB",
+    "theme_color": "#6C63FF",
+    "icons": [
+        {
+            "src": "./icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}

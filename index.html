@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#6C63FF">
+    <meta name="description" content="Aplikasi pengelola tugas mahasiswa">
+
+    <title>Student Task Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <span>Task<span class="brand-highlight">Mate</span></span>
+        </div>
+
+        <div class="sidebar-label">MENU UTAMA</div>
+
+        <nav class="navigation">
+            <button class="nav-link active" data-page="dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-link" data-page="tasks">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Semua Tugas</span>
+            </button>
+
+            <button class="nav-link" data-page="add">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Tambah Tugas</span>
+            </button>
+
+            <button class="nav-link" data-page="statistics">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Statistik</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-info">
+                <i class="fa-solid fa-lightbulb"></i>
+                <p>Kerjakan tugas sedikit demi sedikit. Konsistensi adalah kunci!</p>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">M</div>
+                <div>
+                    <strong>Faldy Mulyadi ilham S.kom</strong>
+                    <small>Student Account</small>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="breadcrumb">
+                <span>Workspace</span>
+                <i class="fa-solid fa-chevron-right"></i>
+                <strong id="breadcrumbTitle">Dashboard</strong>
+            </div>
+
+            <div class="topbar-right">
+                <span class="today-date" id="todayDate"></span>
+                <div class="top-avatar">F</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <!-- HALAMAN DASHBOARD -->
+            <section class="page active" id="dashboard">
+
+                <div class="welcome-section">
+                    <div>
+                        <p class="welcome-subtitle">STUDENT WORKSPACE</p>
+                        <h1>Halo, Mahasiswa! 👋</h1>
+                        <p class="muted">Mari selesaikan tugasmu dan capai target hari ini.</p>
+                    </div>
+
+                    <button class="primary-button" data-go="add">
+                        <i class="fa-solid fa-plus"></i>
+                        Tambah Tugas
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div>
+                            <p>Total Tugas</p>
+                            <h2 id="totalTasks">0</h2>
+                            <small>Semua tugas</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <p>Belum Selesai</p>
+                            <h2 id="pendingTasks">0</h2>
+                            <small>Perlu dikerjakan</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <div>
+                            <p>Sedang Dikerjakan</p>
+                            <h2 id="progressTasks">0</h2>
+                            <small>Dalam proses</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <p>Selesai</p>
+                            <h2 id="completedTasks">0</h2>
+                            <small>Berhasil diselesaikan</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="content-card">
+                        <div class="card-heading">
+                            <div>
+                                <h3>Tugas Terbaru</h3>
+                                <p>Daftar tugas yang perlu diperhatikan</p>
+                            </div>
+                            <button class="text-button" data-go="tasks">Lihat semua</button>
+                        </div>
+
+                        <div id="recentTasks" class="task-list"></div>
+                    </div>
+
+                    <div class="content-card progress-card">
+                        <div class="card-heading">
+                            <div>
+                                <h3>Progres Tugas</h3>
+                                <p>Perkembangan keseluruhan</p>
+                            </div>
+                        </div>
+
+                        <div class="progress-circle" id="progressCircle">
+                            <div>
+                                <h2 id="completionPercent">0%</h2>
+                                <span>Selesai</span>
+                            </div>
+                        </div>
+
+                        <p class="progress-description" id="progressDescription">
+                            Belum ada tugas yang diselesaikan.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- HALAMAN SEMUA TUGAS -->
+            <section class="page" id="tasks">
+
+                <div class="page-heading">
+                    <div>
+                        <h1>Semua Tugas</h1>
+                        <p class="muted">Kelola seluruh tugas perkuliahanmu.</p>
+                    </div>
+
+                    <button class="primary-button" data-go="add">
+                        <i class="fa-solid fa-plus"></i>
+                        Tambah Tugas
+                    </button>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchInput"
+                                   placeholder="Cari nama tugas atau mata kuliah...">
+                        </div>
+
+                        <select id="filterStatus">
+                            <option value="all">Semua Status</option>
+                            <option value="Belum Dikerjakan">Belum Dikerjakan</option>
+                            <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                            <option value="Selesai">Selesai</option>
+                        </select>
+
+                        <select id="filterPriority">
+                            <option value="all">Semua Prioritas</option>
+                            <option value="Tinggi">Tinggi</option>
+                            <option value="Sedang">Sedang</option>
+                            <option value="Rendah">Rendah</option>
+                        </select>
+                    </div>
+
+                    <div id="allTasks" class="task-list"></div>
+
+                </div>
+            </section>
+
+            <!-- HALAMAN TAMBAH / EDIT TUGAS -->
+            <section class="page" id="add">
+
+                <div class="page-heading">
+                    <div>
+                        <h1 id="formTitle">Tambah Tugas Baru</h1>
+                        <p class="muted">Masukkan informasi tugas perkuliahanmu.</p>
+                    </div>
+                </div>
+
+                <div class="content-card form-card">
+
+                    <form id="taskForm">
+
+                        <input type="hidden" id="taskId">
+
+                        <div class="form-group">
+                            <label for="taskName">Nama Tugas *</label>
+                            <input type="text" id="taskName"
+                                   placeholder="Contoh: Membuat program Python"
+                                   maxlength="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Mata Kuliah *</label>
+                            <input type="text" id="subject"
+                                   placeholder="Contoh: Pemrograman Web"
+                                   maxlength="80" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Deskripsi Tugas</label>
+                            <textarea id="description" rows="4"
+                                      placeholder="Tuliskan detail tugas..."></textarea>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label for="deadline">Deadline *</label>
+                                <input type="date" id="deadline" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="priority">Prioritas</label>
+                                <select id="priority">
+                                    <option value="Rendah">Rendah</option>
+                                    <option value="Sedang" selected>Sedang</option>
+                                    <option value="Tinggi">Tinggi</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status Tugas</label>
+                            <select id="status">
+                                <option value="Belum Dikerjakan">Belum Dikerjakan</option>
+                                <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                                <option value="Selesai">Selesai</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="secondary-button" id="cancelForm">
+                                Batal
+                            </button>
+
+                            <button type="submit" class="primary-button">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                Simpan Tugas
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+
+            <!-- HALAMAN STATISTIK -->
+            <section class="page" id="statistics">
+
+                <div class="page-heading">
+                    <div>
+                        <h1>Statistik Tugas</h1>
+                        <p class="muted">Pantau perkembangan tugas perkuliahanmu.</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <p>Total Tugas</p>
+                            <h2 id="statTotal">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <p>Tugas Selesai</p>
+                            <h2 id="statCompleted">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div>
+                            <p>Belum Selesai</p>
+                            <h2 id="statUnfinished">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="content-card">
+                        <div class="card-heading">
+                            <div>
+                                <h3>Grafik Status Tugas</h3>
+                                <p>Perbandingan status pengerjaan</p>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="taskChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-heading">
+                            <div>
+                                <h3>Rincian Prioritas</h3>
+                                <p>Jumlah tugas berdasarkan prioritas</p>
+                            </div>
+                        </div>
+
+                        <div id="priorityStats" class="priority-stats"></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="footer">
+                © 2026 Student Task Manager. Made for Students.
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
