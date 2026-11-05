@@ -3,8 +3,8 @@
 ========================= */
 
 :root {
-    --primary: #6C63FF;
-    --primary-dark: #554BE8;
+    --primary: #2abf34;
+    --primary-dark: #29b524;
     --background: #F6F7FB;
     --white: #FFFFFF;
     --text: #25243A;
@@ -12,7 +12,7 @@
     --border: #ECECF3;
     --green: #27AE79;
     --orange: #F39C45;
-    --blue: #4597DF;
+    --blue: #0e6435;
     --red: #E65D70;
 }
 
@@ -350,7 +350,7 @@ h1 {
 }
 
 .purple {
-    color: #7669F5;
+    color: #04742f;
     background: #EFEDFF;
 }
 
@@ -360,7 +360,7 @@ h1 {
 }
 
 .blue {
-    color: #4799DF;
+    color: #0d943e;
     background: #E8F4FF;
 }
 
@@ -493,7 +493,7 @@ h1 {
 
 .status-progress {
     background: #E8F2FF;
-    color: #4289CC;
+    color: #0b8028;
 }
 
 .status-completed {
@@ -582,7 +582,7 @@ h1 {
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: conic-gradient(var(--primary) 0%, #EEEFF5 0%);
+    background: conic-gradient(#25b82f 0%, #25b82f 100%);
     position: relative;
     margin: 12px 0 20px;
 }
@@ -911,5 +911,51 @@ h1 {
 @media (max-width: 380px) {
     .stats-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Perbaikan tampilan mobile */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.app-container,
+.main-content,
+.content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.card,
+.stat-card,
+.chart-container {
+    max-width: 100%;
+    min-width: 0;
+}
+
+canvas {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .stat-card {
+        width: 100%;
     }
 }

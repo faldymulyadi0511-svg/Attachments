@@ -440,7 +440,7 @@ function renderDashboard() {
         percent + "%";
 
     document.getElementById("progressCircle").style.background =
-        `conic-gradient(#6C63FF ${percent}%, #EEEFF5 ${percent}%)`;
+        `conic-gradient(#25b82f ${percent}%, #EEEFF5 ${percent}%)`;
 
     document.getElementById("progressDescription").textContent =
         total === 0
@@ -553,7 +553,7 @@ function renderChart() {
         "Selesai"
     ];
 
-    const colors = ["#F2A64B", "#4597DF", "#27AE79"];
+    const colors = ["#F2A64B", "#2f4db0", "#27AE79"];
 
     const width = canvas.clientWidth || 400;
     const height = 270;
